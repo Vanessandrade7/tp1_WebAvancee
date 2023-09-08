@@ -2,20 +2,15 @@ export default class AlbumView {
   constructor(params) {
     this.id = params.id;
   }
-
   async getAlbumDetails() {
-    // Fetches album details from the MusicBrainz API.
-    // In a real-world scenario, you might want to add error handling here.
-    const response = await axios.get(`https://musicbrainz.org/ws/2/release/${this.id}`, {
-      params: {
-        fmt: 'json'
-      }
+    const response = await fetch("http://localhost:8081/albums", {
+      mode: 'cors' // or 'no-cors' if you want to avoid CORS checks, but this has its own implications
     });
-    return response.data;
+    return response.json();
   }
 
   async getHtml() {
-    const album = await this.getAlbumDetails();
+    const album = (await this.getAlbumDetails()).find(item => item.id === this.id);
     return `
           <h1>${album.title}</h1>
           <p>Date of Release: ${album.date}</p>

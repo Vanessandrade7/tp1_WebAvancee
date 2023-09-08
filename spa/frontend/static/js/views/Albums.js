@@ -7,7 +7,7 @@ export default class Album {
   }
 
   async getHtml() {
-    const albums = (await this.getAlbums()).albums;
+    const albums = (await this.getAlbums());
     return `
           <h1>Liste des albums</h1>
           <ul>
